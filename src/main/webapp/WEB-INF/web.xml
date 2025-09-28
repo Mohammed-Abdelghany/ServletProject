@@ -4,7 +4,7 @@
     <description></description>
     <display-name>Servlet</display-name>
     <servlet-name>Servlet</servlet-name>
-    <servlet-class>java.servlet.com.Servlet</servlet-class>    
+    <servlet-class>java.servlet.com.Servlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Servlet</servlet-name>
@@ -38,5 +38,15 @@
   <servlet-mapping>
     <servlet-name>ItemModel</servlet-name>
     <url-pattern>/ItemModel</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AuthController</display-name>
+    <servlet-name>AuthController</servlet-name>
+    <servlet-class>com.item.controller.AuthController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthController</servlet-name>
+    <url-pattern>/AuthController</url-pattern>
   </servlet-mapping>
 </web-app>
