@@ -1,8 +1,9 @@
 package com.project.validation;
 
-import com.item.model.User;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.project.model.User;
 
 public class UserValidation {
     private String email;

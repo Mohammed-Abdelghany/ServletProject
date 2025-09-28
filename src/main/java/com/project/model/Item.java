@@ -1,4 +1,4 @@
-package com.item.model;
+package com.project.model;
 
 public class Item {
 	private Long id;

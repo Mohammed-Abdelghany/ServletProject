@@ -1,11 +1,13 @@
-package com.item.controller;
+package com.project.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Objects;
 import javax.sql.DataSource;
-import com.item.model.Item;
-import com.item.service.ItemServiceImp;
+
+import com.project.model.Item;
+import com.project.service.ItemServiceImp;
+
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

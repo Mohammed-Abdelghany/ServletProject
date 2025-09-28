@@ -1,7 +1,7 @@
-package com.item.service;
+package com.project.service;
 import java.util.List;
 
-import com.item.model.Item;
+import com.project.model.Item;
 
 public interface ItemService {
 public boolean addItem(Item item);

@@ -1,4 +1,4 @@
-package com.item.controller;
+package com.project.controller;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
@@ -12,8 +12,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.item.model.User;
-import com.item.service.AuthServiceimp;
+import com.project.model.User;
+import com.project.service.AuthServiceimp;
 import com.project.validation.UserValidation;
 
 @WebServlet("/authcontroller")

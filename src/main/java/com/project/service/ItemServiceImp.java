@@ -1,4 +1,4 @@
-package com.item.service;
+package com.project.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 import javax.sql.DataSource;
 
-import com.item.model.Item;
+import com.project.model.Item;
 
 public class ItemServiceImp implements ItemService {
 	private DataSource dataSource;
