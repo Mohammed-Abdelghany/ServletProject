@@ -57,7 +57,7 @@ The project is ready to be extended with **user authentication** features:
 ## ⚡ How to Run
 1. Clone this repository:
 ```bash
-git clone https://github.com/<username>/ServletProject.git
+git clone https://github.com/Mohammed-Abdelghany/ServletProject.git
 ```
 2. Import project into **Eclipse** as **Dynamic Web Project**.  
 3. Configure **database connection** in `DataSource`.  
