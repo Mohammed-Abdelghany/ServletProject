@@ -1,0 +1,113 @@
+/* خلفية عامة */
+body {
+    background-color: #444;
+    background-image: url('css/istockphoto-1195769833-612x612.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: #444;
+    font: 16px/28px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-shadow: 0 1px 0 #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* حاوية شفافة */
+.layer {
+    width: 100%;
+    min-height: 670px;
+    background-color: rgba(51, 51, 51, 0.9);
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+/* عنوان رئيسي */
+h1 {
+    margin-bottom: 40px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* الجدول */
+table {
+    width: 90%;
+    margin: 0 auto 30px auto;
+    border-collapse: collapse;
+    background: #f5f5f5;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden; /* للحفاظ على الزوايا المستديرة */
+}
+
+/* رأس الجدول */
+th {
+    background: linear-gradient(#777, #444);
+    color: #fff;
+    padding: 12px 15px;
+    border: 1px solid #555;
+    text-shadow: 0 1px 0 #000;
+    font-weight: bold;
+}
+
+/* خلايا الجدول */
+td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* صفوف فردية */
+tbody tr:nth-child(odd) {
+    background: #f1f1f1;
+}
+
+/* تأثير hover */
+tbody tr:hover {
+    background-color: #e9e9e9;
+    color: #000;
+}
+
+a,
+button {
+    display: inline-block;
+    background-color: #8b0000; /* بني غامق أقرب للأحمر الداكن */
+    color: #fff;
+    padding: 8px 16px;
+    font-weight: bold;	
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+a:hover,
+button:hover {
+    color: #ff0;
+    background-color: #a52a2a;
+    text-shadow: 0 1px 0 #fff;
+}
+
+/* زر الإضافة */
+.add,
+.f {
+    display: block;
+    margin: 20px auto;
+    background-color: rebeccapurple;
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 4px;
+    text-align: center;
+    width: fit-content;
+}
+
+.add:hover,
+.f:hover {
+    background-color: #7a52a1;
+    color: #ff0;
+}
