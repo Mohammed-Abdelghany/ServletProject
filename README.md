@@ -32,9 +32,9 @@ All operations are handled via a **Servlet controller** and **Service layer**, c
 ## 📂 Project Structure
 ```
 src/
- └── com.item.controller   -> Servlet controllers
- └── com.item.model        -> Item entity class
- └── com.item.service      -> Service layer for CRUD operations
+ └── com.project.controller   -> Servlet controllers
+ └── com.project.model        -> Item entity class
+ └── com.project.service      -> Service layer for CRUD operations
 WebContent/
  └── index.jsp             -> Show all items
  └── show-item.jsp         -> Show single item
