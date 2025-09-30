@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" version="6.0">
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
   <servlet>
     <description></description>
     <display-name>Servlet</display-name>
@@ -23,7 +26,7 @@
     <description></description>
     <display-name>ItemServlet</display-name>
     <servlet-name>ItemServlet</servlet-name>
-    <servlet-class>com.item.controller.ItemServlet</servlet-class>
+    <servlet-class>com.project.controller.ItemServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ItemServlet</servlet-name>
@@ -33,7 +36,7 @@
     <description></description>
     <display-name>ItemModel</display-name>
     <servlet-name>ItemModel</servlet-name>
-    <servlet-class>com.item.model.ItemModel</servlet-class>
+    <servlet-class>com.project.model.ItemModel</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ItemModel</servlet-name>
@@ -43,10 +46,19 @@
     <description></description>
     <display-name>AuthController</display-name>
     <servlet-name>AuthController</servlet-name>
-    <servlet-class>com.item.controller.AuthController</servlet-class>
+    <servlet-class>com.project.controller.AuthController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AuthController</servlet-name>
     <url-pattern>/AuthController</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>LoginFilter</display-name>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.project.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/LoginFilter</url-pattern>
+  </filter-mapping>
 </web-app>

@@ -14,7 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-	@WebServlet("/itemservlet")
+	@WebServlet("/itemservlet")	
 public class ItemServlet extends HttpServlet  {
 	@Resource(name = "jdbc/connection")
 	private DataSource dataSource;

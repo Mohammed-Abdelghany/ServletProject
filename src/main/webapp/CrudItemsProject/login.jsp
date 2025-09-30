@@ -15,13 +15,11 @@
         <h1>Servlet CRUD</h1>
         <p class="subtitle">Sign in to manage your items</p>
       </div>
-
-      <form class="login-form" action="/LoginServlet" method="post" autocomplete="on">
-        <div class="field">
+      <form class="login-form" action="${pageContext.request.contextPath}/authcontroller?action=login" method="post" autocomplete="on">
+        <div class="field">	
           <label for="email">Email</label>
           <input id="email" name="email" type="email" placeholder="you@example.com" required />
         </div>
-
         <div class="field">
           <label for="password">Password</label>
           <div class="password-wrapper">
@@ -29,7 +27,6 @@
             <button type="button" class="toggle" aria-label="Toggle password">Show</button>
           </div>
         </div>
-
         <div class="row">
           <label class="checkbox">
             <input type="checkbox" name="remember" />
@@ -37,11 +34,8 @@
           </label>
           <a class="small-link" href="/register">Create account</a>
         </div>
-
         <button class="btn primary" type="submit">Sign In</button>
-
         <div class="separator">or</div>
-
         <p class="foot">Forgot password? <a href="/forgot">Reset it</a></p>
       </form>
     </section>
