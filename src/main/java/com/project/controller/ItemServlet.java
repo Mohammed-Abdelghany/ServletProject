@@ -142,7 +142,8 @@ public class ItemServlet extends HttpServlet  {
 	  try {
 	        request.getRequestDispatcher("/CrudItemsProject/index.jsp").forward(request, response);
 	    } catch (ServletException e) {
-	        e.printStackTrace();
+	       e.printStackTrace();
+	       
 	    }
 	
 	}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.project.model.Item"%>
+<%@ page import="com.project.model.User"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,161 +15,177 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Custom CSS -->
     <style>
-    body {
-        background: #0f172a; /* خلفية غامقة أنيقة */
-        font-family: 'Inter', sans-serif;
-        color: #e2e8f0; /* لون النص */
-    }
+        body {
+            background: #0f172a;
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+        }
 
-    .card {
-        background: #1e293b; /* لون الكارت */
-        border: 1px solid #334155;
-        border-radius: 16px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-    }
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+        }
 
-    .card-header {
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        color: #f8fafc;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
+        .card-header {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            color: #f8fafc;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
 
-    .table {
-        margin-bottom: 0;
-        color: #e2e8f0;
-    }
+        .table {
+            margin-bottom: 0;
+            color: #e2e8f0;
+        }
 
-    thead {
-        background-color: #334155;
-        color: #f1f5f9;
-        text-transform: uppercase;
-        font-size: 13px;
-        letter-spacing: 0.4px;
-    }
+        thead {
+            background-color: #334155;
+            color: #f1f5f9;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.4px;
+        }
 
-    tbody tr {
-        transition: background 0.2s ease;
-    }
+        tbody tr {
+            transition: background 0.2s ease;
+        }
 
-    tbody tr:hover {
-        background-color: #1e293b;
-    }
+        tbody tr:hover {
+            background-color: #1e293b;
+        }
 
-    .btn {
-        border-radius: 8px;
-        font-weight: 500;
-        transition: all 0.2s ease;
-    }
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
 
-    .btn:hover {
-        transform: translateY(-2px);
-    }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
 
-    .btn-warning {
-        background: #facc15;
-        color: #1e1e1e;
-        border: none;
-    }
+        .btn-warning {
+            background: #facc15;
+            color: #1e1e1e;
+            border: none;
+        }
 
-    .btn-warning:hover {
-        background: #eab308;
-        color: #fff;
-    }
+        .btn-warning:hover {
+            background: #eab308;
+            color: #fff;
+        }
 
-    .btn-danger {
-        background: #b91c1c;
-        color: #fef2f2;
-        border: none;
-    }
+        .btn-danger {
+            background: #b91c1c;
+            color: #fef2f2;
+            border: none;
+        }
 
-    .btn-danger:hover {
-        background: #dc2626;
-        color: #fff;
-    }
+        .btn-danger:hover {
+            background: #dc2626;
+            color: #fff;
+        }
 
-    .btn-success {
-        background: #15803d;
-        color: #f0fdf4;
-        border: none;
-    }
+        .btn-success {
+            background: #15803d;
+            color: #f0fdf4;
+            border: none;
+        }
 
-    .btn-success:hover {
-        background: #16a34a;
-        color: #fff;
-    }
+        .btn-success:hover {
+            background: #16a34a;
+            color: #fff;
+        }
 
-    .logout-btn {
-        background: #dc2626;
-        border: none;
-        color: #fff;
-    }
+        .logout-btn {
+            background: #dc2626;
+            border: none;
+            color: #fff;
+        }
 
-    .logout-btn:hover {
-        background: #b91c1c;
-    }
+        .logout-btn:hover {
+            background: #b91c1c;
+        }
 
-    .no-items {
-        text-align: center;
-        padding: 60px 0;
-        color: #94a3b8;
-    }
+        .no-items {
+            text-align: center;
+            padding: 60px 0;
+            color: #94a3b8;
+        }
 
-    .no-items h4 {
-        color: #f8fafc;
-        margin-bottom: 10px;
-    }
+        .no-items h4 {
+            color: #f8fafc;
+            margin-bottom: 10px;
+        }
 
-    /* تحسين الجدول */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+        th, td {
+            border-bottom: 1px solid #334155;
+            padding: 12px 16px;
+        }
 
-    th, td {
-        border-bottom: 1px solid #334155;
-        padding: 12px 16px;
-    }
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
 
-    a {
-        color: #60a5fa;
-        text-decoration: none;
-    }
+        a:hover {
+            text-decoration: underline;
+        }
 
-    a:hover {
-        text-decoration: underline;
-    }
-</style>
-    
+        /* Header customization */
+        .header-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .header-user {
+            font-size: 15px;
+            color: #f8fafc;
+        }
+
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: 500;
+        }
+
+        .header-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
+<%
+    User currentUser = (User) session.getAttribute("currentUser");
+    String username = (currentUser != null) ? currentUser.getName() : "Guest";
+    System.out.println(username);
+%>
+
 <div class="container py-5">
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">📦 Items</h3>
-                <%String message = (String) request.getAttribute("message");%>
-            <% if (message != null) { %>
-    <div class="group" style="margin-bottom: 20px;">
-        <div style="background: rgba(40, 167, 69, 0.2); 
-                    border: 2px solid #28a745; 
-                    border-radius: 25px; 
-                    padding: 15px 20px;
-                    color: #fff;">
-            <p style="margin: 0; font-size: 14px;">✅ <%= message %></p>
-        </div>
-    </div>
-<% } %>
-  
-      
-        <form action="${pageContext.request.contextPath}/AuthController" method="post" style="display:inline;">
-    <button type="submit" name="action" value="logout" class="btn btn-danger btn-sm logout-btn">🚪 Logout</button>
-</form>
-        
+        <div class="card-header">
+            <div class="header-info">
+                <div class="header-user">
+                    👋 Welcome, <strong><%= (currentUser != null) ? currentUser.getName() : "Guest" %></strong>
+                </div>
+
+                <div class="header-links d-flex align-items-center">
+                    <a href="${pageContext.request.contextPath}/ProfileController" class="btn btn-sm btn-warning me-2">⚙️ Edit Profile</a>
+
+                    <form action="${pageContext.request.contextPath}/AuthController" method="post" style="display:inline;">
+                        <button type="submit" name="action" value="logout" class="btn btn-danger btn-sm logout-btn">🚪 Logout</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div class="card-body p-0">
@@ -228,12 +245,13 @@
 </div>
 
 <script>
-
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
             const itemId = this.getAttribute('data-id');
-            const deleteUrl = `${"$"}{window.location.origin}${"$"}{window.location.pathname.replace(/show-items\.jsp$/, '')}ItemServlet?action=delete-item&id=${"$"}{itemId}`;
+            const deleteUrl = window.location.origin +
+                              window.location.pathname.replace(/show-items\.jsp$/, '') +
+                              "ItemServlet?action=delete-item&id=" + itemId;
 
             Swal.fire({
                 title: 'هل أنت متأكد؟',

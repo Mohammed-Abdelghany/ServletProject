@@ -53,7 +53,10 @@
             <p style="margin: 0; font-size: 14px;">✅ <%= message %></p>
         </div>
     </div>
-<% } %>
+<% } 
+request.removeAttribute("errors");
+request.removeAttribute("");
+%>
                     
                         <!-- Email Field -->
                         <div class="group">

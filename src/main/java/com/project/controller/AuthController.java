@@ -39,7 +39,6 @@ public class AuthController extends HttpServlet {
         
         if (action == null) {
             request.getRequestDispatcher("/CrudItemsProject/login.jsp").forward(request, response);
-        	System.out.println(action);
 
             return;
         }
@@ -74,10 +73,11 @@ public class AuthController extends HttpServlet {
             return;
         }
 
-        if (authService.login(user)) {
+        if (authService.login(user)!=null) {
             HttpSession session = request.getSession();
-            session.setAttribute("currentUser", user);
+            session.setAttribute("currentUser", authService.login(user));
 
+         
             String remember = request.getParameter("remember");
             if ("on".equals(remember)) {
                 Cookie emailCookie = new Cookie("userEmail", user.getEmail());

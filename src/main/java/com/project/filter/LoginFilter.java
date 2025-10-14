@@ -79,10 +79,10 @@ public class LoginFilter extends HttpFilter {
 
             if (email != null && password != null) {
                 User tempUser = new User(email, password);
-                boolean loggedIn = authService.login(tempUser);
-                if (loggedIn) {
+                User loggedIn = authService.login(tempUser);
+                if (loggedIn!=null) {
                     session = req.getSession(true);
-                    session.setAttribute("currentUser", true); // boolean suffices
+                    session.setAttribute("currentUser", loggedIn); 
                 }
             }
         }

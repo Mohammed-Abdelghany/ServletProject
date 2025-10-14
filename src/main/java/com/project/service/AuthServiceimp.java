@@ -18,25 +18,34 @@ public class AuthServiceimp implements AuthService {
 	}
 
 	@Override
-	public boolean login(User user) {
+	public User login(User user) {
 	    String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-        System.out.println("===> Trying login with: " + user.getEmail() + " / " + user.getPassword());
+	    System.out.println("===> Trying login with: " + user.getEmail() + " / " + user.getPassword());
 
 	    try (Connection connection = dataSource.getConnection();
 	         PreparedStatement stmt = connection.prepareStatement(sql)) {
+
 	        stmt.setString(1, user.getEmail());
 	        stmt.setString(2, user.getPassword());
+
 	        try (ResultSet rs = stmt.executeQuery()) {
 	            if (rs.next()) {
-	                return true;
+	                // المستخدم موجود → نملأ بياناته ونرجعها
+	                User loggedUser = new User(rs.getString("email"),rs.getString("password"));
+	                loggedUser.setId(rs.getLong("id"));
+	                loggedUser.setName(rs.getString("name"));
+	                
+	                return loggedUser;
 	            }
 	        }
+
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    return false;
-	}
 
+	    // لو مفيش نتيجة، نرجع null
+	    return null;
+	}
 	@Override
 	public boolean signup(User user) {
 	    String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";

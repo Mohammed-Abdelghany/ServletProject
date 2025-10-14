@@ -72,4 +72,37 @@ public class UserValidation {
         return errors;
     }
 
+    public List<String> editProfileValidation() {
+        List<String> errors = new ArrayList<>();
+
+        // Validate name
+        if (name == null || name.trim().isEmpty()) {
+            errors.add("Please enter your full name");
+        } else if (name.length() < 3) {
+            errors.add("Name must be at least 3 characters");
+        }
+
+        // Validate email
+        if (email == null || email.trim().isEmpty()) {
+            errors.add("Please enter your email");
+        } else if (!email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            errors.add("Invalid email format");
+        }
+
+        // Validate password (optional)
+        if (password != null && !password.trim().isEmpty()) {
+            if (password.length() < 6) {
+                errors.add("Password must be at least 6 characters");
+            }
+
+            if (confirmPassword == null || confirmPassword.trim().isEmpty()) {
+                errors.add("Please confirm your password");
+            } else if (!password.equals(confirmPassword)) {
+                errors.add("Passwords do not match");
+            }
+        }
+
+        return errors;
+    }
+
 }
