@@ -13,6 +13,26 @@
   <div class="text">
     Add Item
   </div>
+  <%
+  String error = (String) request.getAttribute("errors");
+
+%>
+
+<% if (error != null && !error.isEmpty()) { %>
+    <div class="group" style="margin-bottom: 20px;">
+        <div style="background: rgba(220, 53, 69, 0.2); 
+                    border: 2px solid #dc3545; 
+                    border-radius: 25px; 
+                    padding: 15px 20px;
+                    color: #fff;">
+            
+                <p style="margin: 5px 0; font-size: 14px;">⚠️ <%= error %></p>
+            
+        </div>
+    </div>
+<% } %>
+
+
 <form action="${pageContext.request.contextPath}/itemservlet" method="post">
     <div class="form-row">
       <div class="input-data">

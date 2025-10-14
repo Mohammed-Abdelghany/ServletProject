@@ -1,6 +1,5 @@
 package com.project.controller;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Objects;
 import javax.sql.DataSource;
@@ -16,6 +15,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 	@WebServlet("/itemservlet")	
 public class ItemServlet extends HttpServlet  {
+	/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 	@Resource(name = "jdbc/connection")
 	private DataSource dataSource;
 	private ItemServiceImp itemService;
@@ -68,10 +71,13 @@ public class ItemServlet extends HttpServlet  {
 						Item item=new Item(total_number,price,name);
 				    if(itemService.addItem(item)) {
 				    request.setAttribute("item", item);
+				    request.setAttribute("message", "✅ Created successfully");
 					response.sendRedirect(request.getContextPath() + "/itemservlet");
 				    }
 				    } catch (NumberFormatException e) {
-					e.printStackTrace(); 
+				    request.setAttribute("errors", "error in inputs field");
+			        request.getRequestDispatcher("/CrudItemsProject/add-item.jsp").forward(request, response);
+
 				}
 	}
 
@@ -117,11 +123,14 @@ public class ItemServlet extends HttpServlet  {
 						 int total_number=Integer.parseInt(total_number_parm);
 							Item item=new Item(id,total_number,price,name);
 					    if(itemService.updateItem(item)) {
-					    request.setAttribute("item", item);
+					    	request.setAttribute("message", "✅ Updated successfully");
+					    	request.setAttribute("item", item);
 				        request.getRequestDispatcher("/CrudItemsProject/show-item.jsp").forward(request, response);
 					    }
 					    } catch (NumberFormatException e) {
-						e.printStackTrace(); 
+					    	 request.setAttribute("errors", "error in inputs field");
+						        request.getRequestDispatcher("/CrudItemsProject/update-item.jsp").forward(request, response);
+						
 					}
 
 		 

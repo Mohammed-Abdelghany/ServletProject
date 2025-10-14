@@ -15,6 +15,25 @@
   <div class="text">
     Update Item
   </div>
+  <%
+  String error = (String) request.getAttribute("errors");
+
+%>
+
+<% if (error != null && !error.isEmpty()) { %>
+    <div class="group" style="margin-bottom: 20px;">
+        <div style="background: rgba(220, 53, 69, 0.2); 
+                    border: 2px solid #dc3545; 
+                    border-radius: 25px; 
+                    padding: 15px 20px;
+                    color: #fff;">
+            
+                <p style="margin: 5px 0; font-size: 14px;">⚠️ <%= error %></p>
+            
+        </div>
+    </div>
+<% } %>
+  
   <form action="itemservlet" method="post">
   <input type="hidden" required  name="id" value="${item.id}">
     <div class="form-row">
