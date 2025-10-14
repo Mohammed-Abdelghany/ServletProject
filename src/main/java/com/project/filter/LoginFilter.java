@@ -86,13 +86,17 @@ public class LoginFilter extends HttpFilter {
                 }
             }
         }
+        
 
         // Relative path
         String path = req.getRequestURI();
         String contextPath = req.getContextPath();
         String relativePath = path.startsWith(contextPath) ? path.substring(contextPath.length()) : path;
         if (!relativePath.startsWith("/")) relativePath = "/" + relativePath;
-
+        if (relativePath.endsWith(".jsp") || relativePath.equals("/CrudItemsProject/")) {
+            res.sendRedirect(contextPath + "/AuthController");
+            return;
+        }
         // 1️⃣ Allow static resources
         if (isStaticResource(relativePath)) {
             chain.doFilter(request, response);

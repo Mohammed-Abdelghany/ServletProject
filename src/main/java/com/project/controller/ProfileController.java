@@ -39,15 +39,36 @@ public class ProfileController extends HttpServlet {
 			return;
 		}
 		request.setAttribute("user", user);
-		request.setAttribute("message", "Your info updated succsess");
-
 		request.getRequestDispatcher("/CrudItemsProject/edit-profile.jsp").forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		 String action = request.getParameter("action");
+	        
+	        if (action == null) {
+	            request.getRequestDispatcher("/profilecontroller").forward(request, response);
+	           
+	        }
+	        switch (action) {
+	            case "edit-profile":
+	            	editProfile(request, response);
+	                break;
+	            case "delete-account":
+	            	deleteAccount(request, response);
+	                break;
+	                default:
+	    	            request.getRequestDispatcher("/profilecontroller").forward(request, response);
+	        }
+	        
+	
+		
+	}
+	private void editProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    request.removeAttribute("errors");
+	    request.removeAttribute("message");
+	    request.removeAttribute("error");
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("currentUser") == null) {
 			response.sendRedirect(request.getContextPath() + "/CrudItemsProject/login.jsp");
@@ -92,4 +113,28 @@ public class ProfileController extends HttpServlet {
 		request.setAttribute("user", currentUser);
 		request.getRequestDispatcher("/CrudItemsProject/edit-profile.jsp").forward(request, response);
 	}
+	private void deleteAccount(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+	    HttpSession session = request.getSession(false);
+	    if (session == null || session.getAttribute("currentUser") == null) {
+	        response.sendRedirect(request.getContextPath() + "/CrudItemsProject/login.jsp");
+	        return;
+	    }
+
+	    User currentUser = (User) session.getAttribute("currentUser");
+
+	    boolean success = profileService.deleteAccount(currentUser.getEmail());
+
+	    if (success) {
+	        // لو الحذف نجح، نمسح الجلسة ونعيد توجيه المستخدم للصفحة الرئيسية أو login
+	        session.invalidate();
+	        request.setAttribute("message", "✅ Account deleted successfully.");
+	        request.getRequestDispatcher("/CrudItemsProject/login.jsp").forward(request, response);
+	    } else {
+	        request.setAttribute("error", "❌ Failed to delete account. Try again.");
+	        request.setAttribute("user", currentUser);
+	        request.getRequestDispatcher("/CrudItemsProject/edit-profile.jsp").forward(request, response);
+	    }
+	}
+
 }

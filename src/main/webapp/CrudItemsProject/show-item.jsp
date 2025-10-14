@@ -55,7 +55,7 @@ body {
 								class="btn btn-warning btn-sm me-1"
 								href="itemservlet?action=edit-item&id=<%=item.getId()%>">Update</a>
 								<a class="btn btn-danger btn-sm"
-								href="deleteItem?id=<%=item.getId()%>">Delete</a></td>
+								href="itemservlet?action=delete-item&id=<%=item.getId()%>">Delete</a></td>
 						</tr>
 						<%
 						} else {
@@ -77,4 +77,26 @@ body {
 
 
 </body>
+
+
+ <!-- تحميل مكتبة SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- كود الجافاسكربت -->
+<script>
+<%
+String message = (String) session.getAttribute("message");
+if (message != null) {
+%>
+Swal.fire({
+    icon: 'success',
+    title: 'Success',
+    text: '<%= message %>',
+    timer: 2000,
+    showConfirmButton: false
+});
+<% session.removeAttribute("message"); %>
+<% } %>
+</script>
 </html>
+ 

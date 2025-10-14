@@ -55,7 +55,7 @@
     </div>
 <% } 
 request.removeAttribute("errors");
-request.removeAttribute("");
+request.removeAttribute("message");
 %>
                     
                         <!-- Email Field -->

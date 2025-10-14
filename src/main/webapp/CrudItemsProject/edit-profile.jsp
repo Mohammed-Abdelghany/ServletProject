@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import="java.util.List" %>
-    
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
     <style>
-        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -93,6 +91,24 @@
             background-color: #019ca3;
         }
 
+        .delete-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #c9302c;
+        }
+
         .note {
             text-align: center;
             margin-top: 15px;
@@ -109,12 +125,13 @@
             text-decoration: underline;
         }
     </style>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <%
-  List<String> errors = (List<String>) request.getAttribute("errors");
-  String message = (String) request.getAttribute("message");
-
+<%
+    List<String> errors = (List<String>) request.getAttribute("errors");
+    String message = (String) request.getAttribute("message");
 %>
 
 <% if (errors != null && !errors.isEmpty()) { %>
@@ -126,7 +143,8 @@
         </ul>
     </div>
 <% } %>
-<% if (message != null) { %>
+
+<% if (message!=null) { %>
     <div class="group" style="margin-bottom: 20px;">
         <div style="background: rgba(40, 167, 69, 0.2); 
                     border: 2px solid #28a745; 
@@ -136,41 +154,64 @@
             <p style="margin: 0; font-size: 14px;">✅ <%= message %></p>
         </div>
     </div>
-<%
-	
-} 
+<% } %>
 
-%>
-    <div class="edit-container">
-        <h2>Edit Profile</h2>
-        <form action="${pageContext.request.contextPath}/ProfileController" method="post">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" value="${user.name}" required>
-            </div>
+<div class="edit-container">
+    <h2>Edit Profile</h2>
+    <form action="${pageContext.request.contextPath}/profilecontroller" method="post">
+        <input type="hidden" name="action" value="edit-profile">
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" value="${user.name}" required>
+        </div>
 
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" value="${user.email}" required>
-            </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" value="${user.email}" readonly>
+        </div>
 
-            <div class="form-group">
-                <label for="password">New Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter new password">
-            </div>
+        <div class="form-group">
+            <label for="password">New Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter new password">
+        </div>
 
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password">
-            </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password">
+        </div>
 
-            <button type="submit" class="btn">Save Changes</button>
+        <button type="submit" class="btn">Save Changes</button>
+    </form>
 
-            <div class="note">
-                <a href="profile.jsp">← Back to Profile</a>
-            </div>
-        </form>
+    <!-- 🗑️ Delete Account -->
+    <form id="deleteForm" action="${pageContext.request.contextPath}/profilecontroller" method="post">
+        <input type="hidden" name="action" value="delete-account">
+        <button type="button" class="delete-btn" onclick="confirmDelete()">Delete My Account</button>
+    </form>
+
+    <div class="note">
+        <a href="${pageContext.request.contextPath}/ItemServlet">← Back to home</a>
     </div>
+</div>
+
+<script>
+function confirmDelete() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Your account will be permanently deleted!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('deleteForm').submit();
+        }
+    });
+}
+</script>
 
 </body>
 </html>

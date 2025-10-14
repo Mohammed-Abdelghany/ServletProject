@@ -60,7 +60,7 @@
   </form>
 
   <p class="back">
-    <a href="ServletCourse/itemservlet" >Back To Items</a>
+    <a href="${pageContext.request.contextPath}/itemservlet" >Back To Items</a>
   </p>
 </div>
 <!-- partial -->

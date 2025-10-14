@@ -70,5 +70,21 @@ public class ProfileServiceImp {
         }
         return false;
     }
+ // ✅ حذف حساب المستخدم
+    public boolean deleteAccount(String email) {
+        String query = "DELETE FROM users WHERE email = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, email);
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     
 }

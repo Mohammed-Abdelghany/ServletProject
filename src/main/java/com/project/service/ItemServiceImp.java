@@ -105,5 +105,28 @@ public class ItemServiceImp implements ItemService {
 		}
 		return false;
 	}
+	public Item getItemById(Long id) {
+	    String sql = "SELECT id, name, price, total_number FROM items WHERE id = ?";
+	    try (Connection connection = dataSource.getConnection();
+	         PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+	        stmt.setLong(1, id);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                return new Item(
+	                    rs.getLong("id"),
+	                    rs.getInt("total_number"),
+	                    rs.getDouble("price"),
+	                    rs.getString("name")
+	                );
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null; // لو معرفش يرجع أي Item
+	}
+
+
 
 }

@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 	@WebServlet("/itemservlet")	
 public class ItemServlet extends HttpServlet  {
 	/**
@@ -83,7 +84,7 @@ public class ItemServlet extends HttpServlet  {
 
 	private void showItem(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
-	String parm= request.getParameter("id");
+	String parm= request.getParameter("itemId");
 
 	try {
 	    Long id = Long.parseLong(parm);
@@ -103,7 +104,9 @@ public class ItemServlet extends HttpServlet  {
 		try {
 		    Long id = Long.parseLong(id_parm);
 		    if(itemService.deleteItem(id)) {
-		response.sendRedirect(request.getContextPath() + "/itemservlet");
+		    	HttpSession session=request.getSession();
+		    	session.setAttribute("message", "✅ Item deleted successfully!");
+		    	response.sendRedirect(request.getContextPath() + "/itemservlet");
 		    }
 		    } catch (NumberFormatException e) {
 				e.printStackTrace(); 
@@ -111,30 +114,42 @@ public class ItemServlet extends HttpServlet  {
 
 	}
 
-	private void updateItem(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-			String id_parm=request.getParameter("id");
-			String name=request.getParameter("name");
-			String price_parm=request.getParameter("price");
-			String total_number_parm=request.getParameter("total_number");
-			
-					try {
-					    Long id = Long.parseLong(id_parm);
-					    Double price=Double.parseDouble(price_parm);
-						 int total_number=Integer.parseInt(total_number_parm);
-							Item item=new Item(id,total_number,price,name);
-					    if(itemService.updateItem(item)) {
-					    	request.setAttribute("message", "✅ Updated successfully");
-					    	request.setAttribute("item", item);
-				        request.getRequestDispatcher("/CrudItemsProject/show-item.jsp").forward(request, response);
-					    }
-					    } catch (NumberFormatException e) {
-					    	 request.setAttribute("errors", "error in inputs field");
-						        request.getRequestDispatcher("/CrudItemsProject/update-item.jsp").forward(request, response);
-						
-					}
+	private void updateItem(HttpServletRequest request, HttpServletResponse response)
+	        throws IOException, ServletException {
 
-		 
+	    String id_parm = request.getParameter("id");
+	    HttpSession session = request.getSession();
+
+	    try {
+	        Long id = Long.parseLong(id_parm);
+
+	        String name = request.getParameter("name");
+	        Double price = Double.parseDouble(request.getParameter("price"));
+	        int total_number = Integer.parseInt(request.getParameter("total_number"));
+
+	        Item item = new Item(id, total_number, price, name);
+
+	        if (itemService.updateItem(item)) {
+	            session.setAttribute("message", "✅ Updated successfully");
+	            request.setAttribute("item", item);
+	            request.getRequestDispatcher("/CrudItemsProject/show-item.jsp").forward(request, response);
+	        }
+	    } catch (NumberFormatException e) {
+	        // ✅ جلب البيانات الأصلية من قاعدة البيانات حسب id
+	        try {
+	            Long id = Long.parseLong(id_parm);
+	            Item itemFromDB = itemService.getItemById(id); // لازم تعمل فانكشن getItemById في السيرفيس
+	            request.setAttribute("errors", "⚠️ Please check your input fields.");
+	            request.setAttribute("item", itemFromDB);
+	        } catch (Exception ex) {
+	            request.setAttribute("errors", "⚠️ Invalid item ID.");
+	        }
+
+	        request.getRequestDispatcher("/CrudItemsProject/update-item.jsp").forward(request, response);
+	    }
 	}
+
+	
 	private void showItems(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	
 		List<Item>items=itemService.showItems();

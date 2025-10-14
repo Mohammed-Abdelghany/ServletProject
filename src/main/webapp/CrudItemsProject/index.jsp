@@ -165,6 +165,11 @@
 
 <body>
 <%
+String message = (String) session.getAttribute("message");
+%>
+
+
+<%
     User currentUser = (User) session.getAttribute("currentUser");
     String username = (currentUser != null) ? currentUser.getName() : "Guest";
     System.out.println(username);
@@ -212,7 +217,7 @@
                     <td><%= item.getTotal_number() %></td>
                     <td class="text-center">
                         <a class="btn btn-warning btn-sm me-1"
-                           href="${pageContext.request.contextPath}/ItemServlet?action=show-item&id=<%= item.getId() %>">👁️ Show</a>
+                           href="${pageContext.request.contextPath}/ItemServlet?action=show-item&itemId=<%= item.getId() %>">👁️ Show</a>
                         <a class="btn btn-warning btn-sm me-1"
                            href="${pageContext.request.contextPath}/ItemServlet?action=edit-item&id=<%= item.getId() %>">✏️ Update</a>
                         <button type="button" class="btn btn-danger btn-sm delete-btn"
@@ -249,19 +254,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
             const itemId = this.getAttribute('data-id');
-            const deleteUrl = window.location.origin +
+            const deleteUrl = 
                               window.location.pathname.replace(/show-items\.jsp$/, '') +
-                              "ItemServlet?action=delete-item&id=" + itemId;
+                              "?action=delete-item&id=" + itemId;
 
             Swal.fire({
-                title: 'هل أنت متأكد؟',
-                text: "لن يمكنك التراجع بعد الحذف!",
+                title: 'Are you sure?',
+                text: "This item will be permanently deleted!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#ef4444',
                 cancelButtonColor: '#6b7280',
-                confirmButtonText: 'نعم، احذف العنصر',
-                cancelButtonText: 'إلغاء'
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = deleteUrl;
@@ -270,6 +275,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+<% 
+if (message != null) {
+%>
+ Swal.fire({
+     icon: 'success',
+     title: 'Success',
+     text: '<%= message %>',
+     timer: 2000,
+     showConfirmButton: false
+ });
+ <% session.removeAttribute("message"); %>
+<% } %>
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
